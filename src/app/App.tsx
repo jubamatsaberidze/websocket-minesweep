@@ -1,10 +1,11 @@
-import React from 'react'
+import { Main } from "../common/styles/Main.styles"
+import Header from "../common/ui/Header"
 
 const App = () => {
   return (
-    <div>
-      Initial
-    </div>
+    <Main>
+      <Header />
+    </Main>
   )
 }
 
