@@ -9,3 +9,9 @@ export const Main = styled(Box)({
     margin: 'auto',
     height: '100vh',
 });
+
+export const BoardCont = styled(Box)({
+    maxWidth: 'calc(100vw - 80px)',
+    overflow: 'auto',
+    position: 'relative',
+});

@@ -1,9 +1,9 @@
-import React from 'react'
-import { Main } from '../styles/Main.styles'
+import { Box } from '@mui/material'
+ 
 
 const Board = () => {
   return (
-    <Main>Board</Main>
+    <Box>Board</Box>
   )
 }
 
