@@ -1,6 +1,7 @@
 import { fork, apply, call, put, take } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
 import { ws } from '../../../utils/constants';
+import { setMap, setStatus } from '../../reducers/gameReducers';
 
 function createSocketChannel() {
     return eventChannel((emit: any) => {
@@ -21,8 +22,13 @@ export function* watcherGame(): any {
     while(1) {
         try {
             const data = yield take(channel);
-            console.log(data) // here I test what comes from server when I click header buttons
+            console.log(data)
+            if (data.includes('map:')) yield put(setMap(data));
             if (data.includes('new:'))  {
+                yield fork(getGameBoard, ws);
+            }
+            if (data.includes('open:')) {
+                yield put(setStatus(data.split('open: ')[1]));
                 yield fork(getGameBoard, ws);
             }
         } catch (err) {
@@ -38,3 +44,9 @@ export function* handleStartGame(action: any) {
     ]);
 }
 
+//this function takes payload(data) reveived from websocket server
+//and returns squares row as app requirment
+export const MapPayload = (payload: any): string[] => {
+    const rows = payload.split('map:')[1].split('\n');
+    return rows.filter((item: string[]) => Boolean(item.length));
+}
