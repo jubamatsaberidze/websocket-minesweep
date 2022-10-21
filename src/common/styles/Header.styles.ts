@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles'
 
 export const HeaderCont = styled(Box)({
@@ -9,3 +9,15 @@ export const HeaderCont = styled(Box)({
     borderRadius: 8,
     margin: '8px 0',
 });
+
+export const LevelBtn = styled(Button)(
+    ({ isActive } : { isActive: boolean }) => ({
+        backgroundColor: isActive ? 'green' : 'primary',
+        textTransform: 'none',
+        margin: '4px',
+
+        '&:hover': {
+            backgroundColor: 'primary',
+        },
+    })
+);
