@@ -22,7 +22,7 @@ export function* watcherGame(): any {
     while(1) {
         try {
             const data = yield take(channel);
-            console.log(data)
+            console.log(data)  // here I check the data received from server
             if (data.includes('map:')) yield put(setMap(data));
             if (data.includes('new:'))  {
                 yield fork(getGameBoard, ws);
@@ -44,6 +44,12 @@ export function* handleStartGame(action: any) {
     ]);
 }
 
+export function* handleOpenCell(action: any) {
+    const { row, col } = action.payload;
+    yield apply(ws, ws.send, [
+        `open ${col} ${row}`
+    ])
+}
 //this function takes payload(data) reveived from websocket server
 //and returns squares row as app requirment
 export const MapPayload = (payload: any): string[] => {
