@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { HeaderCont, LevelBtn } from "../styles/Header.styles"
 import { useSelector, useDispatch } from 'react-redux';
+import { level } from '../../store/selectors/selector';
 import { startGame } from '../../store/reducers/startReducer';
 import { initializeGame, restartGame } from '../../store/reducers/gameReducers';
-import { RootState } from '../../store/store';
+import { clearFlags } from '../../store/reducers/playReducer';
 
 const Header = () => {
     const dispatch = useDispatch();
-    const optionState = useSelector((state: RootState) => state.option)
+    const optionState = useSelector(level);
 
     useEffect(() => {
         dispatch(initializeGame());
@@ -18,11 +19,13 @@ const Header = () => {
         if (level === optionState.level) return;
         dispatch(startGame(level));
         dispatch(restartGame());
-
+        dispatch(clearFlags());
     };
+    
     const restart = () => {
         dispatch(startGame(optionState.level));
         dispatch(restartGame());
+        dispatch(clearFlags());
     }
   return (
         <Box display='flex' flexDirection='column'>
@@ -38,7 +41,7 @@ const Header = () => {
                 >
                     1
                 </LevelBtn>
-                <LevelBtn                         
+                <LevelBtn                  
                     variant='contained'
                     isActive={optionState.level === 2}
                     onClick={() => handleChooseLevel(2)}

@@ -1,13 +1,14 @@
 import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { openCell, setFlag } from '../../store/reducers/playReducer';
-import { RootState } from '../../store/store';
+import { gameBoard, gameStatus, isFlags } from '../../store/selectors/selector';
 import Cell from './Cell';
 
 const Board = () => {
   const dispatch = useDispatch();
-  const { status, map } = useSelector((state: RootState) => state.board)
-  const { flags } = useSelector((state: RootState) => state.play);
+  const map = useSelector(gameBoard)
+  const status = useSelector(gameStatus)
+  const flags = useSelector(isFlags)
   const handleClick = (row: number, col: number) => {
     dispatch(openCell({ row, col }));
   };
